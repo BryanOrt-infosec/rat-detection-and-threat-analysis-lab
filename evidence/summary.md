@@ -1,172 +1,83 @@
-\# 📁 Evidence Summary
+# 📂 Evidence Summary
 
+## 📌 Overview
 
+This document provides a summary of all collected evidence during the endpoint detection lab using Sysmon and Splunk.
 
-\## 📌 Overview
+The evidence supports detection of simulated attacker activity.
 
+---
 
+## 🖥️ Command Execution Evidence
 
-This section documents all evidence collected during the endpoint detection lab. Evidence includes both command execution and corresponding detection results in Splunk.
+The following commands were executed and captured:
 
+- whoami
+- systeminfo
+- net user
+- whoami /priv
+- PowerShell commands
+- Get-Process
 
+These commands simulate attacker reconnaissance and enumeration techniques.
 
-The goal is to demonstrate a clear relationship between:
+---
 
+## 📡 Sysmon Evidence
 
+Sysmon successfully logged:
 
-\- Simulated attacker actions
+- Process creation (Event ID 1)
+- Command-line arguments
+- Parent process relationships
 
-\- Logged system activity
+This confirms proper Sysmon configuration and logging.
 
-\- SIEM-based detection
+---
 
+## 🔍 Splunk Evidence
 
+Splunk successfully ingested and displayed logs for:
 
-\---
+- whoami execution
+- ipconfig network discovery
+- net.exe user enumeration
+- netstat connection analysis
+- PowerShell execution
+- schtasks persistence creation
 
+Each activity was searchable and correlated within Splunk.
 
+---
 
-\## 📸 Evidence Categories
+## 📊 Detection Evidence
 
+Statistical and search-based analysis in Splunk showed:
 
+- Clear identification of executed commands
+- Ability to filter by command-line activity
+- Visibility into user behavior patterns
+- Detection of persistence techniques
 
-\### 1. Attack Simulation Evidence
+---
 
+## 📸 Screenshot Evidence
 
+The following screenshots support the analysis:
 
-These screenshots capture the execution of attacker-like commands:
+1. Command execution (whoami, systeminfo, etc.)
+2. Sysmon log ingestion
+3. Splunk search results for each command
+4. Detection of persistence activity
 
+---
 
+## 🎯 Conclusion
 
-\- whoami command execution
+The collected evidence demonstrates that:
 
-\- systeminfo system enumeration
+- Endpoint activity is fully visible using Sysmon
+- Splunk can detect and analyze attacker-like behavior
+- Logs provide sufficient detail for investigation
 
-\- net user enumeration
-
-\- whoami privilege inspection
-
-\- PowerShell execution
-
-\- Get-Process command
-
-
-
-These represent the \*\*attack phase\*\* of the investigation.
-
-
-
-\---
-
-
-
-\### 2. Log Ingestion Evidence
-
-
-
-\- Sysmon ingestion into Splunk confirms that endpoint logs are successfully collected and searchable
-
-\- Demonstrates that the SIEM pipeline is functioning correctly
-
-
-
-\---
-
-
-
-\### 3. Detection Evidence (Splunk)
-
-
-
-These screenshots demonstrate successful detection of:
-
-
-
-\- `whoami.exe` execution
-
-\- `ipconfig.exe` network discovery
-
-\- `net.exe` user enumeration
-
-\- `netstat.exe` network connection analysis
-
-\- `powershell.exe` execution
-
-\- `schtasks.exe` persistence mechanism
-
-
-
-Each detection validates the ability to identify attacker behavior using log analysis.
-
-
-
-\---
-
-
-
-\## 🔗 Correlation
-
-
-
-The evidence establishes a clear timeline:
-
-
-
-1\. Command executed on endpoint
-
-2\. Sysmon logs event
-
-3\. Splunk ingests event
-
-4\. Detection query identifies activity
-
-
-
-This correlation demonstrates effective endpoint monitoring and SIEM-based detection.
-
-
-
-\---
-
-
-
-\## 🎯 Key Takeaways
-
-
-
-\- Endpoint telemetry provides high visibility into system activity
-
-\- Legitimate tools can indicate malicious intent
-
-\- SIEM solutions enable rapid detection and investigation
-
-\- Detection queries can be used to identify suspicious behavior patterns
-
-
-
-\---
-
-
-
-\## 🧾 Conclusion
-
-
-
-The collected evidence confirms that all simulated attacker actions were successfully logged and detected.
-
-
-
-This validates:
-
-
-
-\- Proper Sysmon configuration
-
-\- Successful log ingestion into Splunk
-
-\- Effective detection using SPL queries
-
-
-
-The lab demonstrates a complete detection workflow from execution to analysis.
-
+This validates the effectiveness of endpoint monitoring and SIEM-based detection.
