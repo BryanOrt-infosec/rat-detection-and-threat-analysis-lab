@@ -1,68 +1,33 @@
-\# 🔎 Splunk Detection Queries
+# 🔍 Splunk Detection Queries
 
+## 📌 Overview
 
+This document contains Splunk queries used to detect simulated attacker activity based on Sysmon logs.
 
-\## 📌 Overview
+All queries use:
 
+- index: main
+- sourcetype: XmlWinEventLog:Microsoft-Windows-Sysmon/Operational
 
+---
 
-The following queries were used to detect and analyze endpoint activity generated during the lab. All queries leverage Sysmon logs ingested into Splunk.
-
-
-
-\---
-
-
-
-\## 🟢 Sysmon Log Ingestion
-
-
+## 🔎 View All Sysmon Logs
 
 ```spl
-
-index=main sourcetype=XmlWinEventLog:Microsoft-Windows-Sysmon/Operational
-
-🟢 Process Creation Events (Event ID 1)
-
-index=main EventCode=1
-
-🟢 Command Execution Visibility
-
-index=main EventCode=1
-
-| table \_time Image CommandLine User
-
-| sort -\_time
-
-🟢 whoami Detection
-
-index=main "whoami.exe"
-
-🟢 ipconfig Detection
-
-index=main "ipconfig.exe"
-
-🟢 net.exe Detection (User Enumeration)
-
-index=main "net.exe"
-
-🟢 netstat Detection (Network Activity)
-
-index=main "netstat.exe"
-
-🟢 PowerShell Detection
-
-index=main Image="\*powershell\*"
-
-🟢 Scheduled Task Detection (Persistence)
-
-index=main "schtasks.exe"
-
-🟢 Process Frequency Analysis
-
-index=main EventCode=1
-
-| stats count by Image
-
+index=main sourcetype="XmlWinEventLog:Microsoft-Windows-Sysmon/Operational"
+🎯 Detect whoami Execution
+index=main sourcetype="XmlWinEventLog:Microsoft-Windows-Sysmon/Operational" CommandLine="*whoami*"
+🌐 Detect ipconfig (Network Discovery)
+index=main sourcetype="XmlWinEventLog:Microsoft-Windows-Sysmon/Operational" CommandLine="*ipconfig*"
+👤 Detect net.exe (User Enumeration)
+index=main sourcetype="XmlWinEventLog:Microsoft-Windows-Sysmon/Operational" CommandLine="*net*"
+🌍 Detect netstat (Network Connections)
+index=main sourcetype="XmlWinEventLog:Microsoft-Windows-Sysmon/Operational" CommandLine="*netstat*"
+⚡ Detect PowerShell Execution
+index=main sourcetype="XmlWinEventLog:Microsoft-Windows-Sysmon/Operational" Image="*powershell.exe"
+🔒 Detect Scheduled Tasks (Persistence)
+index=main sourcetype="XmlWinEventLog:Microsoft-Windows-Sysmon/Operational" CommandLine="*schtasks*"
+📊 Count Events by Command
+index=main sourcetype="XmlWinEventLog:Microsoft-Windows-Sysmon/Operational"
+| stats count by CommandLine
 | sort -count
-
